@@ -170,7 +170,29 @@ public class MBSettingViewController: UIViewController, UIGestureRecognizerDeleg
                 }
             }
 
+            // 添加MiniCPM-S模型
+            let languageModelSURLString = MiniCPMModelConst.paperplaneLanguageModelURLString
+            paperplaneLanguageModelManager = MBModelDownloadHelper(llamaState: llamaState,
+                                                                   modelName: MiniCPMModelConst.paperplaneLanguageModelName,
+                                                                   modelUrl: languageModelSURLString,
+                                                                   filename: MiniCPMModelConst.paperplaneLanguageModelName)
+
+            // 断点+续传
+            if let info = FDownLoaderManager.shareInstance().downLoaderInfo {
+
+                // 恢复ProSparse语言模型下载进度
+                let languageModelSFileName = String(stringLiteral: languageModelSURLString).md5() ?? ""
+                if let obj = info[languageModelSFileName] as? FDownLoader {
+                    if obj.state == .downLoading {
+                        // ProSparse语言模型继续下载
+                        self.privateLanguageModelSDown()
+                    }
+                }
+            }
+
+            
         }
+
     }
 
     public override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
@@ -329,6 +351,42 @@ extension MBSettingViewController: UITableViewDelegate {
                     }
                 }
             }
+            
+            if indexPath.row == 1 {
+                // row 1 is ProSparse language model
+                
+                if paperplaneLanguageModelManager?.status == "selected" {
+                    return
+                } else if paperplaneLanguageModelManager?.status == "downloaded" {
+                    // 表示模型已经下载完成，用户点击的话，直接就是切换的逻辑了
+                    llamaState?.currentUsingModelType = .paperPlane
+                    
+                    // 选中ProSparse语言模型
+                    self.paperplaneLanguageModelManager?.status = "selected"
+                    if let cell = self.getLanguageModelSCell() {
+                        let model = cell.model
+                        model?.status = "selected"
+                        cell.configure(with: model)
+                    }
+
+                    self.showInfoTips("切换为ProSparse语言模型")
+                    UserDefaults.standard.setValue("ProSparse", forKey: "current_selected_model")
+                    self.updateUsingModeltype?(.Unknown)
+                } else {
+                    let info = FDownLoaderManager.shareInstance().downLoaderInfo
+                    
+                    // 恢复ProSparse语言模型下载进度
+                    let languageModelSFileName = String(stringLiteral: MiniCPMModelConst.languageModelURLString).md5() ?? ""
+                    if let obj = info?[languageModelSFileName] as? FDownLoader {
+                        if obj.state == .downLoading || obj.state == .pauseFailed || obj.state == .pause {
+                            // ProSparse语言模型继续下载
+                            self.privateLanguageModelSDown()
+                        }
+                    } else {
+                        self.privateLanguageModelSDown()
+                    }
+                }
+            }
         }
     }
     
@@ -338,9 +396,9 @@ extension MBSettingViewController: UITableViewDelegate {
                           forRowAt indexPath: IndexPath) {
         
         if editingStyle == .delete {
-            if indexPath.row == 0 {
-                // 删除 1.2B 语言模型
-                self.privateDeleteLocalLanguageModelQ4_1(indexPath)
+            if indexPath.row == 1 {
+                // 删除ProSparse语言模型
+                self.privateDeleteLocalLanguageModelS(indexPath)
                 UserDefaults.standard.removeObject(forKey: "current_selected_model")
             }
         }
@@ -427,6 +485,84 @@ extension MBSettingViewController {
             showInfoTips("模型未下载")
         }
     }
+    
+    /// ProSparse语言模型下载
+    func privateLanguageModelSDown() {
+        paperplaneLanguageModelManager?.downloadV2(completionBlock: { [weak self] status, progress in
+            DispatchQueue.main.async {
+                if let languageCell = self?.getLanguageModelSCell() {
+                    let languageModel = languageCell.model
+                    if progress >= 1 {
+                        languageModel?.status = "selected"
+                        languageModel?.statusString = "完成"
+                        
+                        // 如果下载完，直接选中
+                        UserDefaults.standard.setValue("ProSparse", forKey: "current_selected_model")
+                    } else {
+                        languageModel?.statusString = String(format: "%.2f%%", progress * 100)
+                    }
+                    languageCell.configure(with: languageModel)
+                    
+                }
+            }
+        })
+    }
+    
+    /// 删除本地下载过的ProSparse语言模型
+    func privateDeleteLocalLanguageModelS(_ indexPath: IndexPath) {
+        var languageModel: Model?
+        var languageModelIndex = -1
+
+        if let models = llamaState?.downloadedModels {
+            for (index, item) in models.enumerated() {
+                if item.filename == MiniCPMModelConst.languageModelFileName {
+                    languageModel = item
+                    languageModelIndex = index
+                }
+            }
+        }
+
+        if languageModelIndex == -1 {
+            return
+        }
+        
+        let fileURL = getDocumentsDirectory().appendingPathComponent(languageModel?.filename ?? "")
+        do {
+            try FileManager.default.removeItem(at: fileURL)
+        } catch {
+            #if DEBUG
+            print("Error deleting file: \(error)")
+            #endif
+        }
+        
+        // Remove models from downloadedModels array
+        if languageModelIndex != -1 {
+            
+            if let cell = getLanguageModelSCell() {
+                let model = cell.model
+                model?.status = "none"
+                model?.statusString = "模型未下载"
+                cell.configure(with: model)
+            }
+
+            // 删除状态机中对应的模型
+            llamaState?.downloadedModels.removeAll(where: { model in
+                if model.filename == MiniCPMModelConst.languageModelFileName {
+                    return true
+                }
+
+                return false
+            })
+            
+            // user defaults 中也要删除
+            // ProSparse语言模型
+            UserDefaults.standard.removeObject(forKey: "current_selected_model")
+            showInfoTips("已删除")
+        } else {
+            UserDefaults.standard.removeObject(forKey: "current_selected_model")
+            showInfoTips("模型未下载")
+        }
+    }
 
     /// 公共方法，获取沙箱 documents 目录
     func getDocumentsDirectory() -> URL {
@@ -451,6 +587,14 @@ extension MBSettingViewController {
     /// 获取 1.2B 语言模型 cell
     func getLanguageModelQ4_1Cell() -> MBSettingTableViewCell? {
         if let cell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? MBSettingTableViewCell {
+            return cell
+        }
+        return nil
+    }
+    
+    /// 获取ProSparse语言模型 cell
+    func getLanguageModelSCell() -> MBSettingTableViewCell? {
+        if let cell = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? MBSettingTableViewCell {
             return cell
         }
         return nil

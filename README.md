@@ -2,6 +2,8 @@
 - 原始项目发布接近一周，但是没看到更新。由于功能还不够完善，所以fork原项目，添加ProSparse版本MiniCPM-S-1B-SFT模型，以便与testflight功能对齐。（进行中）
 - 未来可能会以此项目作为评测端侧LLM的基座，目前还是更倾向于基于LLaMA.cpp的LLMFarm作为评测基座。
 
+-
+
 <div align="center">
 <h1 align="center">MobileCPM</h1>
 <p align="center">A Toolkit for Running On-device Large Language Models (LLMs) in APP</p>

@@ -11,9 +11,5 @@
 	<array>
 		<string>fetch</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>App需要您的同意，才能访问相机用于拍照上传图片作为用户头像。</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>App需要您的同意，才能访问相册用于上传图片作为用户头像。</string>
 </dict>
 </plist>

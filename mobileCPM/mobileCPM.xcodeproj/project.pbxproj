@@ -894,10 +894,12 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = 77Y5JFSH6H;
+				DEVELOPMENT_TEAM = M97RTV2PQG;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = mobileCPM/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "面壁小钢炮";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -908,7 +910,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.modelbest.mobilecpm;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sunkai.mobilecpm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "mobileCPM/mobileCPM-Bridging-Header.h";
@@ -926,10 +928,12 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = 77Y5JFSH6H;
+				DEVELOPMENT_TEAM = M97RTV2PQG;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = mobileCPM/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "面壁小钢炮";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -940,7 +944,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.modelbest.mobilecpm;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sunkai.mobilecpm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "mobileCPM/mobileCPM-Bridging-Header.h";
@@ -991,7 +995,7 @@
 		};
 		FA56626F2C33C5CE0012FA76 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:Alamofire/Alamofire.git";
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.9.1;
