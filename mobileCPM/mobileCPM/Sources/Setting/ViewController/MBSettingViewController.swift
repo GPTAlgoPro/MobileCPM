@@ -47,7 +47,7 @@ public class MBSettingViewController: UIViewController, UIGestureRecognizerDeleg
     /// 列表对应的数据源 [[]]
     var dataArray = [[MBSettingModel]]()
 
-    /// 语言模型
+    /// ProSparse语言模型
     var paperplaneLanguageModelManager: MBModelDownloadHelper?
 
     /// 1.2B 语言模型

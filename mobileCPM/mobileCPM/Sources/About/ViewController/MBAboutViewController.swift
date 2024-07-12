@@ -103,7 +103,7 @@ class MBAboutViewController: UIViewController {
             make.height.equalTo(14)
         }
         
-        copyrightLabel.text = "© 2024 北京智能涌现科技有限公司 版权所有"
+        copyrightLabel.text = "© 2024 孙凯（Based on MobileCPM）"
         view.addSubview(copyrightLabel)
         copyrightLabel.snp.makeConstraints { make in
             make.centerX.equalTo(self.view)
