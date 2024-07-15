@@ -31,13 +31,13 @@ struct MiniCPMModelConst {
     static let languageModelFileName = "MiniCPM-S-1B-sft.gguf"
 
     /// 1.2B 语言模型 oss 下载地址
-//    static let languageModelURLString = "https://minicpm.modelbest.cn/ggml-model-Q4_1.gguf"
-    static let languageModelURLString = "https://huggingface.co/openbmb/MiniCPM-S-1B-sft-gguf/resolve/main/MiniCPM-S-1B-sft.gguf?download=true"
+    static let languageModelURLString = "https://minicpm.modelbest.cn/ggml-model-Q4_1.gguf"
+//    static let languageModelURLString = "https://huggingface.co/openbmb/MiniCPM-S-1B-sft-gguf/resolve/main/MiniCPM-S-1B-sft.gguf?download=true"
     
     /// 显示在 UI 上名字-paperplane
     static let paperplaneModelDisplayedName = "MiniCPM-S"
     
     /// 显示在 UI 上名字-Q4_1
-//    static let languageModelQ4_1DisplayedName = "MiniCPM 1.2B"
-    static let languageModelQ4_1DisplayedName = "MiniCPM-S"
+    static let languageModelQ4_1DisplayedName = "MiniCPM 1.2B"
+//    static let languageModelQ4_1DisplayedName = "MiniCPM-S"
 }
