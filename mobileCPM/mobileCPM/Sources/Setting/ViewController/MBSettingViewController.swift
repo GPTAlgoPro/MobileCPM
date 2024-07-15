@@ -254,6 +254,36 @@ public class MBSettingViewController: UIViewController, UIGestureRecognizerDeleg
             languageModelQ4_1.statusString = "模型未下载"
         }
         sectionA.append(languageModelQ4_1)
+        
+        // proSparse语言模型
+        let languageModelS = MBSettingModel()
+        languageModelS.title = MiniCPMModelConst.paperplaneModelDisplayedName
+        languageModelS.icon = UIImage(named: "setting_model_icon")
+        languageModelS.accessoryIcon = nil
+        languageModelS.selectedIcon = UIImage(named: "setting_selected_icon")
+        
+        if self.llamaState?.currentUsingModelType == .paperPlane {
+            paperplaneLanguageModelManager?.status = "selected"
+        }
+        
+        if let status = paperplaneLanguageModelManager?.status {
+            if status == "download" {
+                languageModelS.status = "none"
+                languageModelS.statusString = "模型未下载"
+            } else if status == "downloading" {
+                languageModelS.status = "none"
+                languageModelS.statusString = "下载中"
+            } else if status == "downloaded" {
+                languageModelS.status = "downloaded"
+                languageModelS.statusString = nil
+            } else if status == "selected" {
+                languageModelS.status = "selected"
+            }
+        } else {
+            languageModelS.status = "none"
+            languageModelS.statusString = "模型未下载"
+        }
+        sectionA.append(languageModelS)
 
         // inset as section a
         dataArray.append(sectionA)
@@ -497,7 +527,7 @@ extension MBSettingViewController {
                         languageModel?.statusString = "完成"
                         
                         // 如果下载完，直接选中
-                        UserDefaults.standard.setValue("ProSparse", forKey: "current_selected_model")
+//                        UserDefaults.standard.setValue("ProSparse", forKey: "current_selected_model")
                     } else {
                         languageModel?.statusString = String(format: "%.2f%%", progress * 100)
                     }
@@ -515,7 +545,7 @@ extension MBSettingViewController {
 
         if let models = llamaState?.downloadedModels {
             for (index, item) in models.enumerated() {
-                if item.filename == MiniCPMModelConst.languageModelFileName {
+                if item.filename == MiniCPMModelConst.paperplaneLanguageModelName {
                     languageModel = item
                     languageModelIndex = index
                 }
@@ -547,7 +577,7 @@ extension MBSettingViewController {
 
             // 删除状态机中对应的模型
             llamaState?.downloadedModels.removeAll(where: { model in
-                if model.filename == MiniCPMModelConst.languageModelFileName {
+                if model.filename == MiniCPMModelConst.paperplaneLanguageModelName {
                     return true
                 }
 

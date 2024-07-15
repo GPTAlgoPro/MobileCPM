@@ -19,25 +19,18 @@ import Foundation
 
 /// 定义 MiniCPM 模型常量
 struct MiniCPMModelConst {
-
-    /// paperplane-iOS 专用语言模型 文件名
+    
+    /// paperplane-iOS 专用语言模型proSparse文件名
     static let paperplaneLanguageModelName = "MiniCPM-S-1B-sft.gguf"
-    
-    /// paperplane-iOS 专用语言模型 下载地址
+    /// paperplane-iOS 专用语言模型HF下载地址
     static let paperplaneLanguageModelURLString = "https://huggingface.co/openbmb/MiniCPM-S-1B-sft-gguf/resolve/main/MiniCPM-S-1B-sft.gguf?download=true"
-
-    /// 1.2B 语言模型 文件名
-//    static let languageModelFileName = "ggml-model-Q4_1.gguf"
-    static let languageModelFileName = "MiniCPM-S-1B-sft.gguf"
-
-    /// 1.2B 语言模型 oss 下载地址
-    static let languageModelURLString = "https://minicpm.modelbest.cn/ggml-model-Q4_1.gguf"
-//    static let languageModelURLString = "https://huggingface.co/openbmb/MiniCPM-S-1B-sft-gguf/resolve/main/MiniCPM-S-1B-sft.gguf?download=true"
-    
     /// 显示在 UI 上名字-paperplane
     static let paperplaneModelDisplayedName = "MiniCPM-S"
-    
+
+    /// 1.2B 语言模型 文件名
+    static let languageModelFileName = "ggml-model-Q4_1.gguf"
+    /// 1.2B 语言模型 oss 下载地址
+    static let languageModelURLString = "https://minicpm.modelbest.cn/ggml-model-Q4_1.gguf"
     /// 显示在 UI 上名字-Q4_1
     static let languageModelQ4_1DisplayedName = "MiniCPM 1.2B"
-//    static let languageModelQ4_1DisplayedName = "MiniCPM-S"
 }
