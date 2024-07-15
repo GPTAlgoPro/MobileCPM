@@ -72,7 +72,8 @@
             if ([tmp.avatar length]) {
                 CGFloat width = [[UIApplication sharedApplication] keyWindow].frame.size.width;
                 width = (width - 12 - 12 - 6) / 2;
-                CGFloat height = ceilf(width * 1.55f);
+//                CGFloat height = ceilf(width * 1.55f);
+                CGFloat height = ceilf(width * 1.f);
                 tmp.cellHeight = height;
                 [waterfallSection.data addObject:tmp];
             }

@@ -99,7 +99,10 @@ class MBHomeWaterfallCollectionViewCell: UICollectionViewCell {
                 
                 var width = UIApplication.shared.keyWindow?.frame.size.width ?? 0
                 width = (width - 12 - 12 - 6) / 2
-                let height = ceilf(Float(width) * 1.55)
+//                let height = ceilf(Float(width) * 1.55)
+                // 1:1 tile
+                let height = ceilf(Float(width) * 1)
+
 
                 imageView.snp.remakeConstraints { make in
                     make.top.left.right.equalTo(self)
